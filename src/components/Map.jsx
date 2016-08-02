@@ -1,6 +1,6 @@
 import React from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-
+import Emojione from 'emojione'
 
 class AppComponent extends React.Component {
     constructor(props) {
@@ -23,18 +23,36 @@ class AppComponent extends React.Component {
         )
     }
     renderMarkers(markers) {
+        const html = Emojione.toImage(':smile:')
+        const url = html.match(/src="(.*)"/)[1]
+        const icon = L.icon({
+            iconUrl: url,
+            iconSize: [32, 32]
+        })
+
+        const comment = "Markin' an' barkin'. WOOF"
+        const tags = ['summer', 'lovelife', 'mainstream']
+
         return markers.map((marker) => {
             return (
-                <Marker position={marker}>
+                <Marker position={marker} icon={icon}>
                     <Popup>
-                        <span>Markin' an' barkin'. WOOF.</span>
+                        <span>
+                            { comment }<br />
+                            { this.renderTags(tags) }
+                        </span>
                     </Popup>
                 </Marker>
             )
         })
     }
+    renderTags(tags) {
+        return tags.map((tag) => {
+            return (<strong key={tag}>#{tag}&nbsp;</strong>)
+        })
+    }
     onClick(event) {
-        console.log('click', event.latlng)
+        console.log('clicked map at:', event.latlng)
     }
 }
 
