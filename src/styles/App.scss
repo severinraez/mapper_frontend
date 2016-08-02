@@ -1,3 +1,10 @@
-#map1 {
-    height: 400px;
+// make ancestors of #map1 full height
+html, body, #app, .main {
+    height: 100%;
 }
+
+#map1 {
+    height: 100%;
+}
+
+@import 'EmojiButtons'

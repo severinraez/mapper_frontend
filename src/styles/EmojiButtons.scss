@@ -1,0 +1,24 @@
+.emoji-buttons {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+
+    right: 20px;
+    top: 30-10%;
+
+    justify-content: center;
+
+    .button {
+        padding: 5px;
+        margin: 5px 0px;
+
+        line-height: 0;
+        background-color: white;
+        border-radius: 37px;
+        box-shadow: 2px 3px rgba(0,0,0, 0.5);
+
+        > img {
+        }
+    }
+}
+

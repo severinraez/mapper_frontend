@@ -1,6 +1,5 @@
 import React from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import Emojione from 'emojione'
 
 class AppComponent extends React.Component {
     constructor(props) {
@@ -23,10 +22,8 @@ class AppComponent extends React.Component {
         )
     }
     renderMarkers(markers) {
-        const html = Emojione.toImage(':smile:')
-        const url = html.match(/src="(.*)"/)[1]
         const icon = L.icon({
-            iconUrl: url,
+            iconUrl: this.props.emojiUrls.forIdentifier(':smile:'),
             iconSize: [32, 32]
         })
 
