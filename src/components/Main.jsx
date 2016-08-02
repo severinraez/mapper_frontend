@@ -4,21 +4,48 @@ require('leaflet/dist/leaflet.css')
 require('styles/App.scss')
 
 import React from 'react'
-
 import Cookie from 'js-cookie'
+import restful, { fetchBackend } from 'restful.js'
 
 import Map from 'components/Map'
 
 let yeomanImage = require('../images/yeoman.png')
 
+const api = restful('http://localhost:4567', fetchBackend(fetch))
+
+let citiesCollection = api.all('cities')
+
 class AppComponent extends React.Component {
     constructor(props) {
         super(props)
     }
+    componentDidMount() {
+        citiesCollection.getAll().then((response) => {
+            let cities = response.body().map((entity) => { return entity.data() })
+
+            // For clustered markers: https://github.com/troutowicz/geoshare/blob/master/app/components/MarkerCluster.jsx
+
+            let markers = cities.map((city) => { return this.coordinates(city) })
+            let position = markers[0]
+
+            console.log(markers)
+
+            this.setState({
+                position: position,
+                markers: markers
+            })
+        })
+    }
+    coordinates(city) {
+        return [city.latitude, city.longitude]
+    }
     render() {
+        if(!this.state) {
+            return ( <div></div> ) }
+
         return (
             <div className="main">
-                <Map position={[51.505, -0.09]} />
+                <Map position={this.state.position} markers={this.state.markers} onClick={this.onClick} />
             </div>
         )
     }
