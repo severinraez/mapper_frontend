@@ -15,7 +15,8 @@ import EmojiUrl from '../domain/EmojiUrl'
 
 let yeomanImage = require('../images/yeoman.png')
 
-const api = restful('http://localhost:4567', fetchBackend(fetch))
+const backendPort = 4567
+const api = restful('http://' + window.location.hostname + ':' + backendPort, fetchBackend(fetch))
 
 let citiesCollection = api.all('cities')
 
