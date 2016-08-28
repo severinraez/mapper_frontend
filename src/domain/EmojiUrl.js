@@ -3,7 +3,6 @@ import Emojione from 'emojione'
 class EmojiUrl {
     constructor() {
         this.urls = {}
-        console.log('construct')
     }
 
     forIdentifier(identifier) {

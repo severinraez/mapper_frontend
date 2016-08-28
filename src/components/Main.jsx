@@ -4,6 +4,7 @@ require('leaflet/dist/leaflet.css')
 require('styles/App.scss')
 
 import React from 'react'
+
 import Cookie from 'js-cookie'
 import restful, { fetchBackend } from 'restful.js'
 
@@ -24,6 +25,7 @@ class AppComponent extends React.Component {
 
         this.emojiUrls = new EmojiUrl()
     }
+
     componentDidMount() {
         citiesCollection.getAll().then((response) => {
             let cities = response.body().map((entity) => { return entity.data() })
@@ -32,8 +34,6 @@ class AppComponent extends React.Component {
 
             let markers = cities.map((city) => { return this.coordinates(city) })
             let position = markers[0]
-
-            console.log(markers)
 
             this.setState({
                 position: position,
