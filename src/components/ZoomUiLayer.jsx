@@ -1,8 +1,7 @@
 import { MapLayer } from 'react-leaflet'
-import { DomUtil } from 'leaflet'
-
 import React from 'react'
-import ReactDOM from 'react-dom';
+
+import LeafletLayerProxy from './LeafletLayerProxy'
 
 class Layer extends React.Component {
     constructor(props) {
@@ -16,7 +15,6 @@ class Layer extends React.Component {
     }
 
     componentWillMount() {
-        // Add a viewreset event listener for updating layer's position.
         this._map().on('viewreset', this._reset, this)
         this._map().on('resize', this._reset, this)
         this._map().on('movestart', this.onMoveStart, this)
@@ -44,8 +42,36 @@ class Layer extends React.Component {
 
         this.setState({
             position: { x: topLeft.x, y: topLeft.y },
-            dimensions: { x: size.x, y: size.x }
+            dimensions: { x: size.x, y: size.y }
         })
+    }
+
+    componentDidMount() {
+        this.updateCanvas()
+    }
+    componentDidUpdate() {
+        this.updateCanvas()
+    }
+
+    updateCanvas() {
+        const ctx = this.refs.canvas.getContext('2d')
+        ctx.strokeStyle = 'rgba(255,255,255, 0.5)'
+
+        const dimensions = this.state.dimensions
+        const size = this.props.size
+
+        const width = dimensions.x / size;
+        const height = dimensions.y / size;
+
+        ctx.clearRect(0, 0, dimensions.x, dimensions.y)
+
+        for(let x = 0; x < size; x++) {
+            let left = x * width
+            for(let y = 0; y < size; y++) {
+                let top = y * height
+                ctx.strokeRect(left, top, left + width, top + height)
+            }
+        }
     }
 
     render() {
@@ -54,30 +80,14 @@ class Layer extends React.Component {
         const display = this.state.visible ? 'block' : 'none'
 
         return (
-            <div style={ { display: display,
-                           width: this.state.dimensions.x + 'px',
-                           height: this.state.dimensions.y + 'px',
-                           transform: transform} }>Hello</div>
+            <canvas
+                ref="canvas"
+                style={ { display: display,
+                          transform: transform} }
+                width={this.state.dimensions.x}
+                height={this.state.dimensions.y}>
+            </canvas>
         )
-    }
-}
-
-class LeafletLayerProxy {
-    onAdd(map) {
-        this.map = map;
-
-        // TODO Can we import L somehow instead of relying on the global variable?
-        this.element = L.DomUtil.create('div', 'zoom-layer leaflet-zoom-ui-layer-hide')
-        this.map.getPanes().overlayPane.appendChild(this.element)
-
-        ReactDOM.render(<Layer map={map}/>, this.element)
-    }
-
-    onRemove(map) {
-        ReactDOM.unmountComponentAtNode(this.element)
-
-        this.map.getPanes().overlayPane.removeChild(this.element)
-        this.map.off('viewreset', this._reset, this)
     }
 }
 
@@ -85,7 +95,7 @@ export default class ZoomUiLayer extends MapLayer {
     componentWillMount() {
         super.componentWillMount()
 
-        this.leafletElement = new LeafletLayerProxy()
+        this.leafletElement = new LeafletLayerProxy(Layer, { size: 3 })
     }
 
     render () {
