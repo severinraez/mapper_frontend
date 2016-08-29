@@ -14,12 +14,12 @@ class AppComponent extends React.Component {
         let markers = this.renderMarkers(this.props.markers)
 
         return (
-            <Map center={position} zoom={13} onClick={this.onClick}>
+            <Map center={position} zoom={13} onClick={this.onClick}
+                 zoomControl={false}>
                 <TileLayer
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
-                <ZoomUiLayer />
                 {markers}
             </Map>
         )
