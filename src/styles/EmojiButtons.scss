@@ -1,23 +1,74 @@
+$hover-color: #343d46;
+$active-color: $hover-color;
+
 .emoji-buttons {
     position: fixed;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
 
     right: 20px;
-    top: 30-10%;
+    bottom: 32px;
 
     justify-content: center;
 
+    &.expanded {
+        .button.expand {
+            background-color: $active-color;
+        }
+
+        .button.add {
+            opacity: 1;
+        }
+    }
+
     .button {
-        padding: 5px;
-        margin: 5px 0px;
+        $padding: 4px;
+
+        padding: $padding;
+        margin: 4px 0px;
 
         line-height: 0;
         background-color: white;
         border-radius: 37px;
         box-shadow: 2px 3px rgba(0,0,0, 0.5);
 
+        transition: opacity 0.3s;
+
+        &:hover {
+            background-color: $hover-color;
+        }
+
         > img {
+            width: 48px;
+            height: 48px;
+        }
+
+        &.expand {
+            width: 48px;
+            height: 48px;
+
+            position: relative;
+
+            > img {
+                width: 32px;
+                height: 32px;
+                position: absolute;
+
+                &:nth-child(2) {
+                    left: $padding + 4px;
+                    top: $padding + 4px;
+                }
+
+                &:nth-child(1) {
+                    left: $padding + 12px;
+                    top: $padding + 12px;
+                }
+            }
+        }
+
+        &.add {
+            opacity: 0;
         }
     }
 }
