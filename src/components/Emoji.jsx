@@ -8,20 +8,27 @@ class AppComponent extends React.Component {
     constructor(props) {
         super(props)
 
-        this.url = emojiUrls.forIdentifier(this.props.name)
+        this.state = { url: this._url(props.name)}
+    }
+    _url(name) {
+        return emojiUrls.forIdentifier(name)
+    }
+    componentWillReceiveProps(props) {
+        this.setState({ url: this._url(props.name)})
     }
     render() {
         return (
-            <img src={this.url} />
+            <img src={this.state.url} className={this.props.className} />
         )
     }
     getImageUrl() {
-        return this.url
+        return this.state.url
     }
 }
 
 AppComponent.propTypes = {
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    className: React.PropTypes.string
 }
 
 export default AppComponent

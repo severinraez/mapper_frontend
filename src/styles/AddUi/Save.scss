@@ -1,0 +1,57 @@
+.add-ui {
+    .save {
+        align-self: center;
+        display: flex;
+        justify-content: center;
+
+        width: 100%;
+
+        .dialog {
+            display: flex;
+            flex-wrap: wrap;
+
+            margin: 8px;
+            border-radius: 8px;
+            box-shadow: 2px 3px rgba(0,0,0, 0.5);
+
+            background-color: white;
+            > * {
+                margin: 4px;
+            }
+
+            input.commentary {
+                border: none;
+                border-bottom: 1px solid black;
+
+                margin-bottom: 8px;
+                align-self: flex-end;
+
+                flex: 1;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .hint {
+                color: #ccc;
+                font-size: .75rem;
+            }
+
+            .send {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+
+                .action {
+                    > img {
+                        width: 32px;
+                        height: 32px;
+                        margin: 4px;
+                    }
+                }
+               
+            }
+        }
+    }
+}
