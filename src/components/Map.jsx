@@ -1,6 +1,7 @@
 import React from 'react'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import ZoomUiLayer from './ZoomUiLayer'
+import Emoji from './Emoji'
 
 class AppComponent extends React.Component {
     constructor(props) {
@@ -24,8 +25,10 @@ class AppComponent extends React.Component {
         )
     }
     renderMarkers(markers) {
+        const emojiUrl = new Emoji({ name: ':smile:' }).getImageUrl()
+
         const icon = L.icon({
-            iconUrl: this.props.emojiUrls.forIdentifier(':smile:'),
+            iconUrl: emojiUrl,
             iconSize: [32, 32]
         })
 

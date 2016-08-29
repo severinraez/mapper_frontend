@@ -2,15 +2,8 @@ $hover-color: #343d46;
 $active-color: $hover-color;
 
 .emoji-buttons {
-    position: fixed;
     display: flex;
     flex-direction: column-reverse;
-    justify-content: flex-end;
-
-    right: 20px;
-    bottom: 32px;
-
-    justify-content: center;
 
     &.expanded {
         .button.expand {
@@ -23,10 +16,13 @@ $active-color: $hover-color;
     }
 
     .button {
+        width: 48px;
+        height: 48px;
+
         $padding: 4px;
 
         padding: $padding;
-        margin: 4px 0px;
+        margin: 4px;
 
         line-height: 0;
         background-color: white;
@@ -45,9 +41,6 @@ $active-color: $hover-color;
         }
 
         &.expand {
-            width: 48px;
-            height: 48px;
-
             position: relative;
 
             > img {

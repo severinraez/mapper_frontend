@@ -10,7 +10,6 @@ import restful, { fetchBackend } from 'restful.js'
 
 import Map from 'components/Map'
 import AddUi from 'components/AddUi'
-import EmojiUrl from '../domain/EmojiUrl'
 
 let yeomanImage = require('../images/yeoman.png')
 
@@ -22,8 +21,6 @@ let citiesCollection = api.all('cities')
 class AppComponent extends React.Component {
     constructor(props) {
         super(props)
-
-        this.emojiUrls = new EmojiUrl()
     }
 
     componentDidMount() {
@@ -50,8 +47,8 @@ class AppComponent extends React.Component {
 
         return (
             <div className="main">
-                <Map position={this.state.position} markers={this.state.markers} onClick={this.onClick} emojiUrls={this.emojiUrls}/>
-                <AddUi emojiUrls={this.emojiUrls}/>
+                <Map position={this.state.position} markers={this.state.markers} onClick={this.onClick} />
+                <AddUi/>
             </div>
         )
     }

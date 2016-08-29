@@ -1,6 +1,7 @@
 import React from 'react'
-import Emojione from 'emojione'
 import classnames from 'classnames'
+
+import Emoji from '../Emoji'
 
 const EMOJIS = [':smile:', ':slight_smile:', ':unamused:', ':frowning2:', ':angry:']
 
@@ -11,32 +12,33 @@ class AppComponent extends React.Component {
         this.state = { expanded: false }
 
         this.toggleExpanded = this.toggleExpanded.bind(this)
+        this.onClick = this.onClick.bind(this)
     }
     toggleExpanded() {
         this.setState({ expanded: !this.state.expanded })
     }
+    onClick(name) {
+        this.props.onSelected(name)
+    }
     render() {
         let buttons =  EMOJIS.map((emoji) => { return this.renderButton(emoji) })
-
-        const smileUrl = this.props.emojiUrls.forIdentifier(':slight_smile:')
-        const frownUrl = this.props.emojiUrls.forIdentifier(':frowning2:')
 
         return (
             <div className={classnames('emoji-buttons', { 'expanded' : this.state.expanded })}>
                 <a className="button expand" href="#" onClick={this.toggleExpanded}>
-                    <img src={frownUrl} />
-                    <img src={smileUrl} />
+                    <Emoji name=':slight_smile:' />
+                    <Emoji name=':frowning2:' />
                 </a>
                 { buttons }
             </div>
         )
     }
     renderButton(emoji) {
-        const url = this.props.emojiUrls.forIdentifier(emoji)
+        const clickHandler = () => { this.onClick(emoji) }
 
         return (
-            <a key={emoji} className="button add" href="#">
-                <img src={url} />
+            <a key={emoji} className="button add" onClick={clickHandler}>
+                <Emoji name={emoji} />
             </a>
         )
     }
