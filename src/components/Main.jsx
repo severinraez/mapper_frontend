@@ -9,8 +9,7 @@ import Cookie from 'js-cookie'
 import restful, { fetchBackend } from 'restful.js'
 
 import Map from 'components/Map'
-import EmojiButtons from 'components/EmojiButtons'
-
+import AddUi from 'components/AddUi'
 import EmojiUrl from '../domain/EmojiUrl'
 
 let yeomanImage = require('../images/yeoman.png')
@@ -52,7 +51,7 @@ class AppComponent extends React.Component {
         return (
             <div className="main">
                 <Map position={this.state.position} markers={this.state.markers} onClick={this.onClick} emojiUrls={this.emojiUrls}/>
-                <EmojiButtons emojiUrls={this.emojiUrls} />
+                <AddUi emojiUrls={this.emojiUrls}/>
             </div>
         )
     }
@@ -62,3 +61,4 @@ AppComponent.defaultProps = {
 }
 
 export default AppComponent
+
