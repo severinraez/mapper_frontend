@@ -9,9 +9,17 @@ class AppComponent extends React.Component {
 
         this.state = { selectedEmoji: null }
         this.emojiSelected = this.emojiSelected.bind(this)
+        this.onSaveAbort = this.onSaveAbort.bind(this)
+        this.onSaveCommit = this.onSaveCommit.bind(this)
     }
     emojiSelected(emojiName) {
         this.setState({ selectedEmoji: emojiName})
+    }
+    onSaveAbort() {
+        this.setState({ selectedEmoji: null })
+    }
+    onSaveCommit(emojiName, comment) {
+        console.log('save', emojiName, comment)
     }
     render() {
         return (
@@ -31,7 +39,9 @@ class AppComponent extends React.Component {
         }
 
         return (
-            <Save emoji={this.state.selectedEmoji} />
+            <Save emoji={this.state.selectedEmoji}
+                  onAbort={this.onSaveAbort}
+                  onCommit={this.onSaveCommit} />
         )
     }
 }

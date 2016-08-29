@@ -6,21 +6,28 @@ class AppComponent extends React.Component {
         super(props)
 
         this.state = { comment: '', tags: [] }
+
+        this.onCommit = this.onCommit.bind(this)
+    }
+    onCommit() {
+        this.props.onCommit(this.props.emoji, this.refs.comment.value)
     }
     render() {
         return (
             <div className="save">
                 <div className="dialog">
                     <Emoji name={this.props.emoji}/>
-                    <input type="text" placeholder='Bla bla bla...' className="commentary"/>
+                    <span className="decorative-quote">&ldquo;</span>
+                    <input ref="comment" type="text" placeholder='Bla bla bla #taggedi #tag' className="commentary"/>
+                    <span className="decorative-quote">&rdquo;</span>
                     <div className="send">
                         <p className="hint">
-                            Dieses Smiley wird an deiner jetztigen Position hinzugefügt.
+                            Dieses Emoji wird an deiner momentanen Position hinzugefügt.
                         </p>
-                        <a className="action" onClick={this.onAbort}>
+                        <a className="action" onClick={this.props.onAbort}>
                             <Emoji name=":negative_squared_cross_mark:" />
                         </a>
-                        <a className="action" onClick={this.onConfirm}>
+                        <a className="action" onClick={this.onCommit}>
                             <Emoji name=":white_check_mark:" />
                         </a>
                     </div>
